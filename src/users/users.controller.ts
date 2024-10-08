@@ -6,19 +6,36 @@ import {
   Param,
   Put,
   Delete,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
+import { CreateUserDto } from './dtos/createUser.dto';
+import { UpdateUserDto } from './dtos/updateUser.dto';
 import { User } from './schemas/user.schema';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from '@configs/multer.config';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('register')
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto);
+  @Post('signup')
+  @UseInterceptors(FilesInterceptor('files', 10, multerConfig))
+  async create(
+    @Body('data') data: string, // Change here to receive data as string
+    @UploadedFiles() files: Express.Multer.File[],
+  ): Promise<User> {
+    // Parse the JSON string to an object
+    const createUserDto: CreateUserDto = JSON.parse(data);
+
+    // Log the user data before saving
+    console.log('Creating new user:', {
+      ...createUserDto,
+      profilePicture: files.length > 0 ? files[0].path : null,
+    });
+
+    return this.usersService.create(createUserDto, files); // Return the result directly
   }
 
   @Put(':id')

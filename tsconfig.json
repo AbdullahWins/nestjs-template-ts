@@ -1,6 +1,13 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "@exceptions/*": ["src/common/exceptions/*"],
+      "@filters/*": ["src/common/filters/*"],
+      "@interceptors/*": ["src/common/interceptors/*"],
+      "@configs/*": ["src/common/configs/*"]
+    },
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -9,7 +16,6 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
