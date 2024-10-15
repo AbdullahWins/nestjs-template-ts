@@ -5,6 +5,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UpdateUserDto } from './dtos/updateUser.dto';
 import { CustomException } from '@exceptions/customException.exception';
+import { LoginUserDto } from './dtos/loginUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,6 +34,26 @@ export class UsersService {
     } catch (error) {
       throw new CustomException();
     }
+  }
+
+  async signin(loginUserDto: LoginUserDto): Promise<User> {
+    const email = loginUserDto.email;
+    const password = loginUserDto.password;
+    console.log('email', email);
+
+    // Find user by email
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new CustomException('User not found', 404);
+    }
+
+    // Compare password (Use a proper password comparison method)
+    const isMatch = user.email === email && user.password === password;
+    if (!isMatch) {
+      throw new CustomException('Invalid credentials', 401);
+    }
+
+    return user;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {

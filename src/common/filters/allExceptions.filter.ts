@@ -24,7 +24,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status = exception.getCustomStatus();
       message = exception.getCustomMessage();
     } else {
-      status = 500; // Internal server error for unknown exceptions
+      status = 500;
       message = 'Internal server error';
     }
 

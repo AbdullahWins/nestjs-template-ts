@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { AllExceptionsFilter } from './common/filters/allExceptions.filter';
+import { MulterMiddleware } from './middlewares/multer.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -31,6 +32,9 @@ async function bootstrap() {
     // Register the global filter for production
     app.useGlobalFilters(new AllExceptionsFilter());
   }
+
+  // Register the Multer middleware globally
+  app.use(new MulterMiddleware().use);
 
   // Create application startup program
   const startServer = async () => {

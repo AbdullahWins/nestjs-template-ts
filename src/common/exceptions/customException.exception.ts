@@ -2,8 +2,8 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class CustomException extends HttpException {
   constructor(
-    private readonly customMessage: string = 'Something went wrong', // Default to 'Something went wrong'
-    private readonly customStatus: number = HttpStatus.BAD_REQUEST, // Default to 400
+    private readonly customMessage: string = 'Internal server error', // Default to 'Internal server error'
+    private readonly customStatus: number = HttpStatus.INTERNAL_SERVER_ERROR, // Default to 500
   ) {
     super(customMessage, customStatus);
   }
