@@ -37,8 +37,8 @@ export class GoogleController {
         return { message: 'Error: No code received from Google OAuth' };
       }
 
-      const integration = await this.googleService.save(userId, code);
-      return { message: 'Gmail integration successful!', integration };
+      const googleIntegration = await this.googleService.save(userId, code);
+      return { message: 'Gmail integration successful!', googleIntegration };
     } catch (error) {
       console.error('Error during OAuth callback:', error);
       return { message: 'Internal server error', error: error.message };
@@ -59,9 +59,9 @@ export class GoogleController {
   //       return { message: 'Error: No code received from Google OAuth' };
   //     }
 
-  //     // Pass the userId and code to save the integration
-  //     const integration = await this.googleService.save(userId, code);
-  //     return { message: 'Gmail integration successful!', integration };
+  //     // Pass the userId and code to save the googleIntegration
+  //     const googleIntegration = await this.googleService.save(userId, code);
+  //     return { message: 'Gmail integration successful!', googleIntegration };
   //   } catch (error) {
   //     console.error('Error during OAuth callback:', error);
   //     return { message: 'Internal server error', error: error.message };

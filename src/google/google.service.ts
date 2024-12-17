@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { google } from 'googleapis';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Integration } from './schemas/integration.schema'; // Integration schema
+import { GoogleIntegration } from './schemas/integration.google.schema';
 
 @Injectable()
 export class GoogleService {
   private oauth2Client: any; // Declare oauth2Client property
 
   constructor(
-    @InjectModel('Integration')
-    private readonly integrationModel: Model<Integration>,
+    @InjectModel('GoogleIntegration')
+    private readonly googleIntegrationModel: Model<GoogleIntegration>,
   ) {
     const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI } =
       process.env;
@@ -45,7 +45,7 @@ export class GoogleService {
 
     if (error) throw new Error('Error in Google OAuth: ' + error);
 
-    const newIntegration = new this.integrationModel({
+    const newGoogleIntegration = new this.googleIntegrationModel({
       userId, // Save the userId here
       accessToken: access_token,
       refreshToken: refresh_token,
@@ -53,23 +53,25 @@ export class GoogleService {
       scope,
     });
 
-    console.log('Saving integration:', newIntegration);
-    await newIntegration.save();
-    return newIntegration;
+    console.log('Saving google integration:', newGoogleIntegration);
+    await newGoogleIntegration.save();
+    return newGoogleIntegration;
   }
 
   // Step 2: Refresh access token if expired
-  async refreshIfExpired(integrationId: string) {
-    const integration = await this.integrationModel.findById(integrationId);
-    if (!integration) throw new Error('Integration not found.');
+  async refreshIfExpired(googleIntegrationId: string) {
+    const googleIntegration =
+      await this.googleIntegrationModel.findById(googleIntegrationId);
+    if (!googleIntegration) throw new Error('Google integration not found.');
 
-    if (integration.expiresAt > new Date()) return integration.accessToken;
+    if (googleIntegration.expiresAt > new Date())
+      return googleIntegration.accessToken;
 
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        refresh_token: integration.refreshToken,
+        refresh_token: googleIntegration.refreshToken,
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
         grant_type: 'refresh_token',
@@ -79,21 +81,23 @@ export class GoogleService {
     const { access_token, expires_in, error, scope } = await response.json();
     if (error) throw new Error('Unable to refresh token.');
 
-    integration.accessToken = access_token;
-    integration.expiresAt = this.expiresAtFromSeconds(expires_in);
-    integration.scope = scope;
+    googleIntegration.accessToken = access_token;
+    googleIntegration.expiresAt = this.expiresAtFromSeconds(expires_in);
+    googleIntegration.scope = scope;
 
-    await integration.save();
+    await googleIntegration.save();
     return access_token;
   }
 
   // Step 3: Get access token and refresh if needed
   async getAccessToken(userId: string) {
     console.log('Fetching access token for userId:', userId); // Log the userId
-    const integration = await this.integrationModel.findOne({ userId });
-    if (!integration) throw new Error('Integration not found.');
+    const googleIntegration = await this.googleIntegrationModel.findOne({
+      userId,
+    });
+    if (!googleIntegration) throw new Error('Google integration not found.');
 
-    return await this.refreshIfExpired(integration._id.toString());
+    return await this.refreshIfExpired(googleIntegration._id.toString());
   }
 
   // Step 4: Fetch Gmail emails using access token
