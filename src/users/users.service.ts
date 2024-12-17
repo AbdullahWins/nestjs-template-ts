@@ -74,3 +74,4 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(id).exec();
   }
 }
+
