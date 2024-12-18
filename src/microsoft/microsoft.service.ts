@@ -24,9 +24,8 @@ export class MicrosoftService {
       `response_type=code&` +
       `redirect_uri=${this.redirectUri}&` +
       `response_mode=query&` +
-      `scope=mail.read user.read&` +
-      `state=${userId}`; // Pass userId as state
-
+      `scope=mail.read user.read offline_access&` +
+      `state=${userId}`; // Pass userId to map tokens to users
     return authUrl;
   }
 
@@ -84,16 +83,14 @@ export class MicrosoftService {
     try {
       const response = await axios.post(
         `https://login.microsoftonline.com/${this.tenantId}/oauth2/v2.0/token`,
-        null,
-        {
-          params: {
-            client_id: this.clientId,
-            client_secret: this.clientSecret,
-            refresh_token: microsoftIntegration.refreshToken,
-            grant_type: 'refresh_token',
-            redirect_uri: this.redirectUri,
-          },
-        },
+        new URLSearchParams({
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
+          refresh_token: microsoftIntegration.refreshToken,
+          grant_type: 'refresh_token',
+          redirect_uri: this.redirectUri,
+        }).toString(),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       );
 
       const { access_token, expires_in } = response.data;
@@ -104,8 +101,16 @@ export class MicrosoftService {
       await microsoftIntegration.save();
       return access_token;
     } catch (error) {
-      console.error('Error refreshing access token:', error);
-      throw new Error('Failed to refresh access token');
+      console.error(
+        'Error refreshing access token:',
+        error.response?.data || error.message,
+      );
+      if (error.response?.data?.error === 'invalid_grant') {
+        throw new Error(
+          'Refresh token is invalid or expired. Please re-authenticate.',
+        );
+      }
+      throw new Error('Failed to refresh access token.');
     }
   }
 

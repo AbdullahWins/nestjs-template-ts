@@ -45,37 +45,6 @@ export class GoogleController {
     }
   }
 
-  // @Get('auth/callback')
-  // async handleCallback(
-  //   @Query('code') code: string,
-  //   @Query('state') userId: string, // Extract `state` parameter (which is the `userId`)
-  // ) {
-  //   try {
-  //     if (!userId) {
-  //       return { message: 'Error: userId is missing in the query parameters.' };
-  //     }
-
-  //     if (!code) {
-  //       return { message: 'Error: No code received from Google OAuth' };
-  //     }
-
-  //     // Pass the userId and code to save the googleIntegration
-  //     const googleIntegration = await this.googleService.save(userId, code);
-  //     return { message: 'Gmail integration successful!', googleIntegration };
-  //   } catch (error) {
-  //     console.error('Error during OAuth callback:', error);
-  //     return { message: 'Internal server error', error: error.message };
-  //   }
-  // }
-
-  // Step 3: Fetch Gmail emails for a user
-  // @Get('emails')
-  // async getEmails(@Query('userId') userId: string) {
-  //   const accessToken = await this.googleService.getAccessToken(userId);
-  //   const emails = await this.googleService.fetchEmails(accessToken);
-  //   return emails;
-  // }
-
   @Get('emails/:userId')
   async getEmails(@Param('userId') userId: string) {
     try {
