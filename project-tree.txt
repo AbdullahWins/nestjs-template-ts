@@ -1,0 +1,225 @@
+F:\NestJs\netro-systems-server
+├── commitlint.config.js
+├── dist
+|  ├── app.controller.d.ts
+|  ├── app.controller.js
+|  ├── app.controller.js.map
+|  ├── app.module.d.ts
+|  ├── app.module.js
+|  ├── app.module.js.map
+|  ├── app.service.d.ts
+|  ├── app.service.js
+|  ├── app.service.js.map
+|  ├── common
+|  |  ├── configs
+|  |  |  ├── multer.config.d.ts
+|  |  |  ├── multer.config.js
+|  |  |  └── multer.config.js.map
+|  |  ├── exceptions
+|  |  |  ├── customException.exception.d.ts
+|  |  |  ├── customException.exception.js
+|  |  |  └── customException.exception.js.map
+|  |  ├── filters
+|  |  |  ├── allExceptions.filter.d.ts
+|  |  |  ├── allExceptions.filter.js
+|  |  |  └── allExceptions.filter.js.map
+|  |  └── interceptors
+|  |     ├── response.interceptor.d.ts
+|  |     ├── response.interceptor.js
+|  |     └── response.interceptor.js.map
+|  ├── databases
+|  |  ├── database.module.d.ts
+|  |  ├── database.module.js
+|  |  └── database.module.js.map
+|  ├── google
+|  |  ├── dto
+|  |  |  ├── create-google.dto.d.ts
+|  |  |  ├── create-google.dto.js
+|  |  |  ├── create-google.dto.js.map
+|  |  |  ├── update-google.dto.d.ts
+|  |  |  ├── update-google.dto.js
+|  |  |  └── update-google.dto.js.map
+|  |  ├── entities
+|  |  |  ├── google.entity.d.ts
+|  |  |  ├── google.entity.js
+|  |  |  └── google.entity.js.map
+|  |  ├── google.controller.d.ts
+|  |  ├── google.controller.js
+|  |  ├── google.controller.js.map
+|  |  ├── google.module.d.ts
+|  |  ├── google.module.js
+|  |  ├── google.module.js.map
+|  |  ├── google.service.d.ts
+|  |  ├── google.service.js
+|  |  ├── google.service.js.map
+|  |  └── schemas
+|  |     ├── integration.google.schema.d.ts
+|  |     ├── integration.google.schema.js
+|  |     └── integration.google.schema.js.map
+|  ├── linkedin
+|  |  ├── dto
+|  |  |  ├── create-linkedin.dto.d.ts
+|  |  |  ├── create-linkedin.dto.js
+|  |  |  ├── create-linkedin.dto.js.map
+|  |  |  ├── update-linkedin.dto.d.ts
+|  |  |  ├── update-linkedin.dto.js
+|  |  |  └── update-linkedin.dto.js.map
+|  |  ├── entities
+|  |  |  ├── linkedin.entity.d.ts
+|  |  |  ├── linkedin.entity.js
+|  |  |  └── linkedin.entity.js.map
+|  |  ├── linkedin.controller.d.ts
+|  |  ├── linkedin.controller.js
+|  |  ├── linkedin.controller.js.map
+|  |  ├── linkedin.module.d.ts
+|  |  ├── linkedin.module.js
+|  |  ├── linkedin.module.js.map
+|  |  ├── linkedin.service.d.ts
+|  |  ├── linkedin.service.js
+|  |  ├── linkedin.service.js.map
+|  |  └── schemas
+|  |     ├── integration.linkedin.schema.d.ts
+|  |     ├── integration.linkedin.schema.js
+|  |     └── integration.linkedin.schema.js.map
+|  ├── main.d.ts
+|  ├── main.js
+|  ├── main.js.map
+|  ├── microsoft
+|  |  ├── dto
+|  |  |  ├── create-microsoft.dto.d.ts
+|  |  |  ├── create-microsoft.dto.js
+|  |  |  ├── create-microsoft.dto.js.map
+|  |  |  ├── update-microsoft.dto.d.ts
+|  |  |  ├── update-microsoft.dto.js
+|  |  |  └── update-microsoft.dto.js.map
+|  |  ├── entities
+|  |  |  ├── microsoft.entity.d.ts
+|  |  |  ├── microsoft.entity.js
+|  |  |  └── microsoft.entity.js.map
+|  |  ├── microsoft.controller.d.ts
+|  |  ├── microsoft.controller.js
+|  |  ├── microsoft.controller.js.map
+|  |  ├── microsoft.module.d.ts
+|  |  ├── microsoft.module.js
+|  |  ├── microsoft.module.js.map
+|  |  ├── microsoft.service.d.ts
+|  |  ├── microsoft.service.js
+|  |  ├── microsoft.service.js.map
+|  |  └── schemas
+|  |     ├── integration.microsoft.schema.d.ts
+|  |     ├── integration.microsoft.schema.js
+|  |     └── integration.microsoft.schema.js.map
+|  ├── middlewares
+|  |  ├── multer.middleware.d.ts
+|  |  ├── multer.middleware.js
+|  |  └── multer.middleware.js.map
+|  ├── tsconfig.build.tsbuildinfo
+|  └── users
+|     ├── dtos
+|     |  ├── createUser.dto.d.ts
+|     |  ├── createUser.dto.js
+|     |  ├── createUser.dto.js.map
+|     |  ├── loginUser.dto.d.ts
+|     |  ├── loginUser.dto.js
+|     |  ├── loginUser.dto.js.map
+|     |  ├── updateUser.dto.d.ts
+|     |  ├── updateUser.dto.js
+|     |  └── updateUser.dto.js.map
+|     ├── interfaces
+|     |  ├── users.interface.d.ts
+|     |  ├── users.interface.js
+|     |  └── users.interface.js.map
+|     ├── schemas
+|     |  ├── user.schema.d.ts
+|     |  ├── user.schema.js
+|     |  └── user.schema.js.map
+|     ├── users.controller.d.ts
+|     ├── users.controller.js
+|     ├── users.controller.js.map
+|     ├── users.module.d.ts
+|     ├── users.module.js
+|     ├── users.module.js.map
+|     ├── users.service.d.ts
+|     ├── users.service.js
+|     └── users.service.js.map
+├── nest-cli.json
+├── out.txt
+├── package.json
+├── README.md
+├── src
+|  ├── app.controller.ts
+|  ├── app.module.ts
+|  ├── app.service.ts
+|  ├── common
+|  |  ├── configs
+|  |  |  └── multer.config.ts
+|  |  ├── controllers
+|  |  ├── exceptions
+|  |  |  └── customException.exception.ts
+|  |  ├── filters
+|  |  |  └── allExceptions.filter.ts
+|  |  ├── interceptors
+|  |  |  └── response.interceptor.ts
+|  |  └── types
+|  ├── databases
+|  |  └── database.module.ts
+|  ├── google
+|  |  ├── dto
+|  |  |  ├── create-google.dto.ts
+|  |  |  └── update-google.dto.ts
+|  |  ├── entities
+|  |  |  └── google.entity.ts
+|  |  ├── google.controller.ts
+|  |  ├── google.module.ts
+|  |  ├── google.service.ts
+|  |  └── schemas
+|  |     └── integration.google.schema.ts
+|  ├── linkedin
+|  |  ├── dto
+|  |  |  ├── create-linkedin.dto.ts
+|  |  |  └── update-linkedin.dto.ts
+|  |  ├── entities
+|  |  |  └── linkedin.entity.ts
+|  |  ├── linkedin.controller.ts
+|  |  ├── linkedin.module.ts
+|  |  ├── linkedin.service.ts
+|  |  └── schemas
+|  |     └── integration.linkedin.schema.ts
+|  ├── main.ts
+|  ├── microsoft
+|  |  ├── dto
+|  |  |  ├── create-microsoft.dto.ts
+|  |  |  └── update-microsoft.dto.ts
+|  |  ├── entities
+|  |  |  └── microsoft.entity.ts
+|  |  ├── microsoft.controller.ts
+|  |  ├── microsoft.module.ts
+|  |  ├── microsoft.service.ts
+|  |  └── schemas
+|  |     └── integration.microsoft.schema.ts
+|  ├── middlewares
+|  |  └── multer.middleware.ts
+|  └── users
+|     ├── dtos
+|     |  ├── createUser.dto.ts
+|     |  ├── loginUser.dto.ts
+|     |  └── updateUser.dto.ts
+|     ├── interfaces
+|     |  └── users.interface.ts
+|     ├── schemas
+|     |  └── user.schema.ts
+|     ├── users.controller.ts
+|     ├── users.module.ts
+|     └── users.service.ts
+├── test
+|  ├── app.e2e-spec.ts
+|  └── jest-e2e.json
+├── tsconfig.build.json
+├── tsconfig.json
+├── uploads
+|  └── 1728911068311-Leonardo_Phoenix_A_comically_mischievous_Minion_from_the_belov_0.jpg
+└── yarn.lock
+
+directory: 2208 file: 13048
+
+ignored: directory (98)

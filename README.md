@@ -45,6 +45,11 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Generating project tree
+
+1. install tree cli globally using "npm install -g tree-cli" if you don't already have it.
+2. run "yarn tree" to generate the project-tree.txt file
+
 ## Test
 
 ```bash
