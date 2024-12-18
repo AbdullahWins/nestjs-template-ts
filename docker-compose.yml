@@ -1,0 +1,15 @@
+# Filename: docker-compose.yml
+
+services:
+  nestjs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    volumes:
+      - ./logs:/usr/src/app/logs
+      - .env:/usr/src/app/.env

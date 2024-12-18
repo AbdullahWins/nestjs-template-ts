@@ -1,0 +1,33 @@
+# Filename: .dockerignore
+# Dependency directories
+node_modules
+
+# Build outputs
+dist
+
+# Environment files
+.env
+*.env
+
+# Git and CI files
+.git
+.gitignore
+.github
+
+# Logs
+logs
+*.log
+
+# Development files
+README.md
+CONTRIBUTING.md
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Testing
+coverage
+test
