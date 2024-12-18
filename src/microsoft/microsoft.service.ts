@@ -30,6 +30,47 @@ export class MicrosoftService {
   }
 
   // Save the access token after OAuth2 callback
+  // async save(userId: string, code: string) {
+  //   try {
+  //     const response = await axios.post(
+  //       `https://login.microsoftonline.com/${this.tenantId}/oauth2/v2.0/token`,
+  //       new URLSearchParams({
+  //         client_id: this.clientId,
+  //         client_secret: this.clientSecret,
+  //         code: code,
+  //         grant_type: 'authorization_code',
+  //         redirect_uri: this.redirectUri,
+  //       }).toString(), // Convert to URL encoded string
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/x-www-form-urlencoded',
+  //         },
+  //       },
+  //     );
+
+  //     const { access_token, refresh_token, expires_in, scope } = response.data;
+
+  //     const newMicrosoftIntegration = new this.microsoftIntegrationModel({
+  //       userId,
+  //       accessToken: access_token,
+  //       refreshToken: refresh_token,
+  //       expiresAt: new Date(Date.now() + expires_in * 1000),
+  //       scope,
+  //     });
+
+  //     await newMicrosoftIntegration.save();
+  //     return newMicrosoftIntegration;
+  //   } catch (error) {
+  //     console.error(
+  //       'Full error during token exchange:',
+  //       error.response?.data || error.message,
+  //     );
+  //     console.error('Error details:', JSON.stringify(error, null, 2));
+  //     throw new Error('Failed to exchange code for access token');
+  //   }
+  // }
+
+  // Save the access token after OAuth2 callback
   async save(userId: string, code: string) {
     try {
       const response = await axios.post(
@@ -48,25 +89,45 @@ export class MicrosoftService {
         },
       );
 
-      const { access_token, refresh_token, expires_in, scope } = response.data;
+      // Check for errors in response data (similar to how we handle Google)
+      const { error, access_token, refresh_token, expires_in, scope } =
+        response.data;
+      if (error) {
+        throw new Error(`Microsoft OAuth Error: ${error}`);
+      }
 
-      const newMicrosoftIntegration = new this.microsoftIntegrationModel({
+      // Prepare the data to update or create
+      const microsoftIntegrationData = {
         userId,
         accessToken: access_token,
         refreshToken: refresh_token,
         expiresAt: new Date(Date.now() + expires_in * 1000),
         scope,
-      });
+      };
 
-      await newMicrosoftIntegration.save();
-      return newMicrosoftIntegration;
+      // Find the existing Microsoft integration or create a new one
+      const microsoftIntegration =
+        await this.microsoftIntegrationModel.findOneAndUpdate(
+          { userId }, // Check if an integration for this user exists
+          microsoftIntegrationData, // Data to update or insert
+          { upsert: true, new: true }, // If not found, insert a new record; return the updated record
+        );
+
+      console.log(
+        'Saving or updating Microsoft integration:',
+        microsoftIntegration,
+      );
+      return microsoftIntegration;
     } catch (error) {
+      // Log the error and provide a custom error message
       console.error(
         'Full error during token exchange:',
         error.response?.data || error.message,
       );
       console.error('Error details:', JSON.stringify(error, null, 2));
-      throw new Error('Failed to exchange code for access token');
+      throw new Error(
+        'Failed to exchange code for access token with Microsoft',
+      );
     }
   }
 

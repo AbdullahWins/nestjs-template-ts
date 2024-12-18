@@ -30,6 +30,7 @@ export class LinkedInService {
 
   // Step 2: Handle callback and save tokens
   async save(userId: string, code: string) {
+    // Request LinkedIn access token using the authorization code
     const response = await axios.post(
       'https://www.linkedin.com/oauth/v2/accessToken',
       new URLSearchParams({
@@ -49,17 +50,27 @@ export class LinkedInService {
     const { access_token, expires_in, error, id_token } = response.data;
     if (error) throw new Error('LinkedIn OAuth Error: ' + error);
 
-    // Store only relevant data
-    const linkedInIntegration = new this.linkedInIntegrationModel({
+    // Prepare the data to save or update
+    const linkedInIntegrationData = {
       userId,
       accessToken: access_token,
       refreshToken: null, // LinkedIn doesn't always provide a refresh token
       expiresAt: this.expiresAtFromSeconds(expires_in),
       idToken: id_token || null, // Save idToken if needed
-    });
+    };
 
-    console.log('Saving LinkedIn integration:', linkedInIntegration);
-    await linkedInIntegration.save();
+    // Find the existing LinkedIn integration or create a new one
+    const linkedInIntegration =
+      await this.linkedInIntegrationModel.findOneAndUpdate(
+        { userId }, // Check if the integration for this user exists
+        linkedInIntegrationData, // Data to update or insert
+        { upsert: true, new: true }, // If not found, insert a new record; return the updated record
+      );
+
+    console.log(
+      'Saving or updating LinkedIn integration:',
+      linkedInIntegration,
+    );
     return linkedInIntegration;
   }
 

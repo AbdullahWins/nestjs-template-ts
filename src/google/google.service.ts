@@ -44,18 +44,26 @@ export class GoogleService {
       await response.json();
 
     if (error) throw new Error('Error in Google OAuth: ' + error);
-
-    const newGoogleIntegration = new this.googleIntegrationModel({
+    
+    // Prepare the data for update or insert
+    const googleIntegrationData = {
       userId, // Save the userId here
       accessToken: access_token,
       refreshToken: refresh_token,
       expiresAt: this.expiresAtFromSeconds(expires_in),
       scope,
-    });
+    };
 
-    console.log('Saving google integration:', newGoogleIntegration);
-    await newGoogleIntegration.save();
-    return newGoogleIntegration;
+    // Find the existing Google integration or create a new one
+    const googleIntegration =
+      await this.googleIntegrationModel.findOneAndUpdate(
+        { userId }, // Check if an integration for this user exists
+        googleIntegrationData, // Data to update or insert
+        { upsert: true, new: true }, // If not found, insert a new record; return the updated record
+      );
+
+    console.log('Saving or updating Google integration:', googleIntegration);
+    return googleIntegration;
   }
 
   // Step 2: Refresh access token if expired
